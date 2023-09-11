@@ -3,6 +3,6 @@
 3    package="com.hoho.android.usbserial" >
 4
 5    <uses-sdk android:minSdkVersion="17" />
-5-->D:\MyWorks\AS\FingerprintScanner\usbSerialForAndroid\src\main\AndroidManifest.xml
+5-->D:\MyProjects\AS\com.avalue.example.fingerprintscanner\FingerprintScanner\usbSerialForAndroid\src\main\AndroidManifest.xml
 6
 7</manifest>

@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * Refresh Butttons Status
+     * Refresh Buttons Status
      */
     private void RefreshButtonsStatus()
     {
@@ -323,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String HexCmdResponseScanFingerprintNAK = "EF01FFFFFFFF07000302000C";
                     String HexCmdResponseDumpFingerprintNAK01 = "EF01FFFFFFFF07000301000A";
                     String HexCmdResponseDumpFingerprintNAK0F = "EF01FFFFFFFF0700030F000A";
+                    String HexCmdResponseDumpFingerprintEND = "EF01FFFFFFFF080082FFFFFF";
 
                     String HexCmdResponseTemp;
 
@@ -340,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 _MessageTextView.append("Please put finger on Fingerprint Scanner Module (BCC-FINGERPT-01R) and press Scan button!\n");
                                 _IsFingerprintScanned = false;
                             }
-                            // Refresh Butttons Status
+                            // Refresh Buttons Status
                             RefreshButtonsStatus();
                             break;
 
@@ -352,15 +353,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 if (HexCmdResponseTemp.contains(HexCmdResponseACK))
                                 {
                                     _MessageTextView.append("Request Fingerprint Scanner Module (BCC-FINGERPT-01R) dumping successful!\n");
-                                } else if (HexCmdResponseTemp.contains(HexCmdResponseDumpFingerprintNAK01))
+                                }
+                                else if (HexCmdResponseTemp.contains(HexCmdResponseDumpFingerprintNAK01))
                                 {
                                     _DumpFingerprintRawStringBuilder.setLength(0);
                                     _MessageTextView.append("Request Fingerprint Scanner Module (BCC-FINGERPT-01R) dumping failed! Exception: Receiving Packet Error!\n");
-                                } else if (HexCmdResponseTemp.contains(HexCmdResponseDumpFingerprintNAK0F))
+                                    // Refresh Buttons Status
+                                    RefreshButtonsStatus();
+                                }
+                                else if (HexCmdResponseTemp.contains(HexCmdResponseDumpFingerprintNAK0F))
                                 {
                                     _DumpFingerprintRawStringBuilder.setLength(0);
                                     _MessageTextView.append("Request Fingerprint Scanner Module (BCC-FINGERPT-01R) dumping failed! Exception: Can't transmit continue data packet!\n");
-                                } else
+                                    // Refresh Buttons Status
+                                    RefreshButtonsStatus();
+                                }
+                                else
                                 {
                                     _MessageTextView.append("Receiving Packet: " + _DumpFingerprintRawStringBuilder.toString().length() + "\n");
                                     if (_DumpFingerprintRawStringBuilder.toString().length() == DUMP_FINGERPRINT_PACKET_LENGTH)
@@ -372,6 +380,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         {
                                             FingerprintBitmap = BitmapFactory.decodeByteArray(FingerprintBitmapBytesArray, 0 , FingerprintBitmapBytesArray.length);
                                             _FingerprintImageView.setImageBitmap(FingerprintBitmap);
+                                        }
+
+                                        // Refresh Buttons Status
+                                        RefreshButtonsStatus();
+                                    }
+                                    else
+                                    {
+                                        if (HexCmdResponseTemp.contains(HexCmdResponseDumpFingerprintEND))
+                                        {
+                                            _MessageTextView.append("Fingerprint Scanner Module (BCC-FINGERPT-01R) dumping packet length incorrect, data lost!\n");
+                                            // Refresh Buttons Status
+                                            RefreshButtonsStatus();
                                         }
                                     }
                                 }
@@ -439,7 +459,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _CloseButton = (Button)findViewById(R.id.CloseButton);
         _CloseButton.setOnClickListener(MainActivity.this);
         _FingerprintImageView = (ImageView)findViewById(R.id.FingerprintImageView);
-        // Refresh Butttons Status
+        // Refresh Buttons Status
         RefreshButtonsStatus();
     }
 
@@ -504,7 +524,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 finally
                 {
-                    // Refresh Butttons Status
+                    // Refresh Buttons Status
                     RefreshButtonsStatus();
                 }
                 break;
@@ -532,6 +552,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     {
                         if (_IsFingerprintScanned)
                         {
+                            _ClearButton.setEnabled(false);
+                            _OpenButton.setEnabled(false);
+                            _ScanButton.setEnabled(false);
+                            _DumpButton.setEnabled(false);
+                            _CloseButton.setEnabled(false);
+                            _FingerprintImageView.setImageResource(android.R.color.transparent);
+
                             _DumpFingerprintRawStringBuilder.setLength(0);
                             _UsbSerialPortCommand = "DumpFingerprint";
                             _UsbSerialPort.write(BytesCmdRequestDumpFingerprint, WRITE_WAIT_MILLIS);
@@ -568,7 +595,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         _UsbSerialPort = null;
                     }
                 }
-                // Refresh Butttons Status
+                // Refresh Buttons Status
                 RefreshButtonsStatus();
                 break;
 
