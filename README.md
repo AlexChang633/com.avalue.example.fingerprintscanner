@@ -1,5 +1,5 @@
 # com.avalue.example.fingerprintscanner
-This repository contains Avalue Technology Inc. - BCC-FINGERPT-01R Fingerprint Scanner Module Android Tutorial Code for Android Studio.
+This repository contains Avalue Technology Inc. - BCC-FINGERPT-01R Fingerprint Scanner Module Android 11 Tutorial Code for Android Studio.
 
 # Introduction
 The Tutorial Code was made by Android Studio Flamingo 2022.2.1 Patch 2. Please make sure your development environment is matched.
