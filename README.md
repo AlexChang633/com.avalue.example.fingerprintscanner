@@ -11,5 +11,5 @@ The Tutorial Code was made by Android Studio Flamingo 2022.2.1 Patch 2. Please m
 
 # Refreence
 [usb-serial-for-android](https://github.com/mik3y/usb-serial-for-android "usb-serial-for-android")
-This Tutorial Code depends on as above GitHub project to control USB to UART communication.
+This Tutorial Code depends on this GitHub project to control USB to UART communication.
 This project license is MIT license.
