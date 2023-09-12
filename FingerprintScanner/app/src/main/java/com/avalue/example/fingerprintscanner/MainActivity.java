@@ -323,7 +323,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String HexCmdResponseScanFingerprintNAK = "EF01FFFFFFFF07000302000C";
                     String HexCmdResponseDumpFingerprintNAK01 = "EF01FFFFFFFF07000301000A";
                     String HexCmdResponseDumpFingerprintNAK0F = "EF01FFFFFFFF0700030F000A";
-                    String HexCmdResponseDumpFingerprintEND = "EF01FFFFFFFF080082FFFFFF";
 
                     String HexCmdResponseTemp;
 
@@ -384,15 +383,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                         // Refresh Buttons Status
                                         RefreshButtonsStatus();
-                                    }
-                                    else
-                                    {
-                                        if (HexCmdResponseTemp.contains(HexCmdResponseDumpFingerprintEND))
-                                        {
-                                            _MessageTextView.append("Fingerprint Scanner Module (BCC-FINGERPT-01R) dumping packet length incorrect, data lost!\n");
-                                            // Refresh Buttons Status
-                                            RefreshButtonsStatus();
-                                        }
                                     }
                                 }
                             }
